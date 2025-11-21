@@ -3,10 +3,8 @@ import {
   ContentBlockSchema,
   EmptyResultSchema,
   ImplementationSchema,
-  RequestId,
   RequestIdSchema,
   RequestSchema,
-  Tool,
   ToolSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
