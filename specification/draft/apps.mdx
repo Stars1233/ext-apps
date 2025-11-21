@@ -317,27 +317,40 @@ When the Guest UI sends an `ui/initialize` request to the Host, the Host SHOULD 
 
 ```typescript
 interface HostContext {
-  toolInfo?: {      // Metadata of the tool call that instantiated the App
-    id?: RequestId, // JSON-RPC id of the tools/call request
-    tool: Tool,     // contains name, inputSchema, etc…
+  /** Metadata of the tool call that instantiated the App */
+  toolInfo?: {
+    /** JSON-RPC id of the tools/call request */
+    id?: RequestId,
+    /** Contains name, inputSchema, etc… */
+    tool: Tool,
   };
+  /** Current color theme preference */
   theme?: "light" | "dark" | "system";
+  /** How the UI is currently displayed */
   displayMode?: "inline" | "fullscreen" | "pip" | "carousel";
+  /** Display modes the host supports */
   availableDisplayModes?: string[];
+  /** Current and maximum dimensions available to the UI */
   viewport?: {
     width: number;
     height: number;
     maxHeight?: number;
     maxWidth?: number;
   };
-  locale?: string;           // BCP 47, e.g., "en-US"
-  timeZone?: string;         // IANA, e.g., "America/New_York"
+  /** User's language/region preference (BCP 47, e.g., "en-US") */
+  locale?: string;
+  /** User's timezone (IANA, e.g., "America/New_York") */
+  timeZone?: string;
+  /** Host application identifier */
   userAgent?: string;
+  /** Platform type for responsive design */
   platform?: "web" | "desktop" | "mobile";
+  /** Device capabilities such as touch */
   deviceCapabilities?: {
     touch?: boolean;
     hover?: boolean;
   }
+  /** Mobile safe area boundaries in pixels */
   safeAreaInsets?: {
     top: number;
     right: number;
@@ -346,19 +359,6 @@ interface HostContext {
   };
 }
 ```
-
-**Field Descriptions:**
-
-- `theme`: Current color theme preference
-- `displayMode`: How the UI is currently displayed
-- `availableDisplayModes`: Display modes the host supports
-- `viewport`: Current and maximum dimensions available to the UI
-- `locale`: User's language/region preference
-- `timeZone`: User's timezone
-- `userAgent`: Host application identifier
-- `platform`: Platform type for responsive design
-- `deviceCapabilities`: Device capabilities such as touch
-- `safeAreaInsets`: Mobile safe area boundaries in pixels
 
 All fields are optional. Hosts SHOULD provide relevant context. Guest UIs SHOULD handle missing fields gracefully.
 
