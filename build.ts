@@ -25,8 +25,9 @@ async function buildJs(
 }
 
 await Promise.all([
-  buildJs("src/app.ts"),
-  buildJs("src/react/index.tsx", { outdir: "dist/react" }),
+  buildJs("src/app.ts", { outdir: "dist/src" }),
+  buildJs("src/app-host.ts", { outdir: "dist/src" }),
+  buildJs("src/react/index.tsx", { outdir: "dist/src/react" }),
   // buildJs("examples/example-ui-react.tsx", { outdir: "dist/examples" }),
   // buildJs("examples/example-ui.ts", { outdir: "dist/examples" }),
   // buildJs("examples/example-server.ts", {

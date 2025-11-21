@@ -4,15 +4,19 @@
   "version": "1.0.0",
   "description": "Hey",
   "type": "module",
-  "main": "./dist/app.js",
+  "main": "./dist/src/app.js",
   "exports": {
     ".": {
-      "types": "./dist/app.d.ts",
-      "default": "./dist/app.js"
+      "default": "./dist/src/app.js",
+      "types": "./dist/src/app.d.ts"
     },
     "./react": {
-      "types": "./dist/react/index.d.ts",
-      "default": "./dist/react/index.js"
+      "default": "./dist/src/react/index.js",
+      "types": "./dist/src/react/index.d.ts"
+    },
+    "./app-host": {
+      "default": "./dist/src/app-host.js",
+      "types": "./dist/src/app-host.d.ts"
     }
   },
   "scripts": {
