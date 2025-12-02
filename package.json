@@ -26,11 +26,17 @@
     "examples/*"
   ],
   "scripts": {
-    "start:example-host": "cd examples/simple-host && npm start",
-    "start:example-mcp-server": "cd examples/simple-server && npm start",
-    "start": "NODE_ENV=development npm run build && concurrently 'npm run start:example-host' 'npm run start:example-mcp-server'",
     "build": "bun build.bun.ts",
+    "build:all": "npm run build && npm run examples:build",
     "test": "bun test",
+    "examples:build": "concurrently --kill-others-on-fail 'npm run --workspace=examples/basic-host build' 'npm run --workspace=examples/basic-server-react build'",
+    "examples:start": "NODE_ENV=development npm run build && concurrently 'npm run examples:start:basic-host' 'npm run examples:start:basic-server-react'",
+    "examples:start:basic-host": "npm run --workspace=examples/basic-host start",
+    "examples:start:basic-server-react": "npm run --workspace=examples/basic-server-react start",
+    "watch": "nodemon --watch src --ext ts,tsx --exec 'bun build.bun.ts'",
+    "examples:dev": "NODE_ENV=development concurrently 'npm run watch' 'npm run examples:dev:basic-host' 'npm run examples:dev:basic-server-react'",
+    "examples:dev:basic-host": "npm run --workspace=examples/basic-host dev",
+    "examples:dev:basic-server-react": "npm run --workspace=examples/basic-server-react dev",
     "prepare": "npm run build && husky",
     "docs": "typedoc",
     "docs:watch": "typedoc --watch",
@@ -48,6 +54,7 @@
     "esbuild": "^0.25.12",
     "express": "^5.1.0",
     "husky": "^9.1.7",
+    "nodemon": "^3.1.0",
     "prettier": "^3.6.2",
     "typedoc": "^0.28.14",
     "typescript": "^5.9.3"

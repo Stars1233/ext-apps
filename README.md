@@ -23,7 +23,7 @@ Embed and communicate with MCP Apps in your chat application.
 
 - **SDK for Hosts**: `@modelcontextprotocol/ext-apps/app-bridge` — [API Docs](https://modelcontextprotocol.github.io/ext-apps/api/modules/app-bridge.html)
 
-There's no _supported_ host implementation in this repo (beyond the [examples/simple-host](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/simple-host) example).
+There's no _supported_ host implementation in this repo (beyond the [examples/basic-host](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/basic-host) example).
 
 We have [contributed a tentative implementation](https://github.com/MCP-UI-Org/mcp-ui/pull/147) of hosting / iframing / sandboxing logic to the [MCP-UI](https://github.com/idosal/mcp-ui) repository, and expect OSS clients may use it, while other clients might roll their own hosting logic.
 
@@ -54,14 +54,14 @@ Your `package.json` will then look like:
 
 ## Examples
 
-- [examples/simple-server](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/simple-server) — Example MCP server with tools that return UI Apps
-- [examples/simple-host](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/simple-host) — Bare-bones example of hosting MCP Apps
+- [`examples/basic-server-react`](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/basic-server-react) — Example MCP server with tools that return UI Apps
+- [`examples/basic-host`](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/basic-host) — Bare-bones example of hosting MCP Apps
 
 To run the examples end-to-end:
 
 ```
 npm i
-npm start
+npm run examples:start
 ```
 
 Then open http://localhost:8080/
