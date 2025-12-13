@@ -268,7 +268,7 @@
               "description": "CSS variables for theming the app.",
               "type": "object",
               "propertyNames": {
-                "description": "Style variables for theming MCP apps.",
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
                 "anyOf": [
                   {
                     "type": "string",
@@ -417,8 +417,13 @@
                 ]
               },
               "additionalProperties": {
-                "description": "Style variables for theming MCP apps.",
-                "type": "string"
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
               }
             },
             "displayMode": {
@@ -711,7 +716,7 @@
           "description": "CSS variables for theming the app.",
           "type": "object",
           "propertyNames": {
-            "description": "Style variables for theming MCP apps.",
+            "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
             "anyOf": [
               {
                 "type": "string",
@@ -860,8 +865,13 @@
             ]
           },
           "additionalProperties": {
-            "description": "Style variables for theming MCP apps.",
-            "type": "string"
+            "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {}
+            ]
           }
         },
         "displayMode": {
@@ -1336,7 +1346,7 @@
               "description": "CSS variables for theming the app.",
               "type": "object",
               "propertyNames": {
-                "description": "Style variables for theming MCP apps.",
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
                 "anyOf": [
                   {
                     "type": "string",
@@ -1485,8 +1495,13 @@
                 ]
               },
               "additionalProperties": {
-                "description": "Style variables for theming MCP apps.",
-                "type": "string"
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
               }
             },
             "displayMode": {
@@ -2341,10 +2356,10 @@
     },
     "McpUiStyles": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "description": "Style variables for theming MCP apps.",
+      "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
       "type": "object",
       "propertyNames": {
-        "description": "Style variables for theming MCP apps.",
+        "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
         "anyOf": [
           {
             "type": "string",
@@ -2493,8 +2508,13 @@
         ]
       },
       "additionalProperties": {
-        "description": "Style variables for theming MCP apps.",
-        "type": "string"
+        "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {}
+        ]
       }
     },
     "McpUiTheme": {

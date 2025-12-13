@@ -91,8 +91,14 @@ export type McpUiStyleVariableKey =
 
 /**
  * @description Style variables for theming MCP apps.
+ *
+ * Individual style keys are optional - hosts may provide any subset of these values.
+ * Values are strings containing CSS values (colors, sizes, font stacks, etc.).
+ *
+ * Note: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`
+ * for compatibility with Zod schema generation. Both are functionally equivalent for validation.
  */
-export type McpUiStyles = Record<McpUiStyleVariableKey, string>;
+export type McpUiStyles = Record<McpUiStyleVariableKey, string | undefined>;
 
 /**
  * @description Request to open an external URL in the host's default browser.

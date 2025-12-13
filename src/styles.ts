@@ -109,6 +109,8 @@ export function applyHostStyles(
   root: HTMLElement = document.documentElement,
 ): void {
   for (const [key, value] of Object.entries(styles)) {
-    root.style.setProperty(key, value);
+    if (value !== undefined) {
+      root.style.setProperty(key, value);
+    }
   }
 }

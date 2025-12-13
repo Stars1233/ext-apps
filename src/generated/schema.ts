@@ -70,15 +70,27 @@ export const McpUiStyleVariableKeySchema = z
 
 /**
  * @description Style variables for theming MCP apps.
+ *
+ * Individual style keys are optional - hosts may provide any subset of these values.
+ * Values are strings containing CSS values (colors, sizes, font stacks, etc.).
+ *
+ * Note: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`
+ * for compatibility with Zod schema generation. Both are functionally equivalent for validation.
  */
 export const McpUiStylesSchema = z
   .record(
     McpUiStyleVariableKeySchema.describe(
-      "Style variables for theming MCP apps.",
+      "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
     ),
-    z.string().describe("Style variables for theming MCP apps."),
+    z
+      .union([z.string(), z.undefined()])
+      .describe(
+        "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+      ),
   )
-  .describe("Style variables for theming MCP apps.");
+  .describe(
+    "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+  );
 
 /**
  * @description Request to open an external URL in the host's default browser.
