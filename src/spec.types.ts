@@ -245,6 +245,14 @@ export interface McpUiToolCancelledNotification {
 }
 
 /**
+ * @description Style configuration for theming MCP apps.
+ */
+export interface McpUiHostStyles {
+  /** @description CSS variables for theming the app. */
+  variables?: McpUiStyles;
+}
+
+/**
  * @description Rich context about the host environment provided to Guest UIs.
  */
 export interface McpUiHostContext {
@@ -259,8 +267,8 @@ export interface McpUiHostContext {
   };
   /** @description Current color theme preference. */
   theme?: McpUiTheme;
-  /** @description CSS variables for theming the app. */
-  styles?: McpUiStyles;
+  /** @description Style configuration for theming the app. */
+  styles?: McpUiHostStyles;
   /** @description How the UI is currently displayed. */
   displayMode?: McpUiDisplayMode;
   /** @description Display modes the host supports. */

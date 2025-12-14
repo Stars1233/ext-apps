@@ -404,8 +404,11 @@ interface HostContext {
   };
   /** Current color theme preference */
   theme?: "light" | "dark";
-  /** CSS variables for theming. See Theming section for standardized variable names. */
-  styles?: Record<McpUiStyleVariableKey, string | undefined>;
+  /** Style configuration for theming. See Theming section for standardized variable names. */
+  styles?: {
+    /** CSS variables for theming */
+    variables?: Record<McpUiStyleVariableKey, string | undefined>;
+  };
   /** How the UI is currently displayed */
   displayMode?: "inline" | "fullscreen" | "pip";
   /** Display modes the host supports */
@@ -454,10 +457,12 @@ Example:
     "hostContext": {
       "theme": "dark",
       "styles": {
-        "--color-background-primary": "light-dark(#ffffff, #171717)",
-        "--color-text-primary": "light-dark(#171717, #fafafa)",
-        "--font-family-sans": "system-ui, sans-serif",
-        ...
+        "variables": {
+          "--color-background-primary": "light-dark(#ffffff, #171717)",
+          "--color-text-primary": "light-dark(#171717, #fafafa)",
+          "--font-family-sans": "system-ui, sans-serif",
+          ...
+        }
       },
       "displayMode": "inline",
       "viewport": { "width": 400, "height": 300 }
@@ -468,7 +473,7 @@ Example:
 
 ### Theming
 
-Hosts can optionally pass CSS custom properties via `HostContext.styles` for visual cohesion with the host environment.
+Hosts can optionally pass CSS custom properties via `HostContext.styles.variables` for visual cohesion with the host environment.
 
 #### Current Standardized Variables
 

@@ -453,11 +453,11 @@ app.onhostcontextchanged = (params) => {
   if (params.theme) {
     applyDocumentTheme(params.theme);
   }
-  if (params.styles) {
-    applyHostStyles(params.styles);
+  if (params.styles?.variables) {
+    applyHostStyles(params.styles.variables);
   }
   // Recreate chart to pick up new colors
-  if (state.chart && (params.theme || params.styles)) {
+  if (state.chart && (params.theme || params.styles?.variables)) {
     state.chart.destroy();
     state.chart = initChart();
   }
@@ -469,8 +469,8 @@ app.connect(new PostMessageTransport(window.parent)).then(() => {
   if (ctx?.theme) {
     applyDocumentTheme(ctx.theme);
   }
-  if (ctx?.styles) {
-    applyHostStyles(ctx.styles);
+  if (ctx?.styles?.variables) {
+    applyHostStyles(ctx.styles.variables);
   }
 });
 

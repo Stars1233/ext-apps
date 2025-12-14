@@ -247,6 +247,16 @@ export const McpUiToolCancelledNotificationSchema = z.object({
 });
 
 /**
+ * @description Style configuration for theming MCP apps.
+ */
+export const McpUiHostStylesSchema = z.object({
+  /** @description CSS variables for theming the app. */
+  variables: McpUiStylesSchema.optional().describe(
+    "CSS variables for theming the app.",
+  ),
+});
+
+/**
  * @description Request for graceful shutdown of the Guest UI (Host -> Guest UI).
  * @see {@link app-bridge.AppBridge.sendResourceTeardown} for the host method that sends this
  */
@@ -422,9 +432,9 @@ export const McpUiHostContextSchema = z.looseObject({
   theme: McpUiThemeSchema.optional().describe(
     "Current color theme preference.",
   ),
-  /** @description CSS variables for theming the app. */
-  styles: McpUiStylesSchema.optional().describe(
-    "CSS variables for theming the app.",
+  /** @description Style configuration for theming the app. */
+  styles: McpUiHostStylesSchema.optional().describe(
+    "Style configuration for theming the app.",
   ),
   /** @description How the UI is currently displayed. */
   displayMode: McpUiDisplayModeSchema.optional().describe(

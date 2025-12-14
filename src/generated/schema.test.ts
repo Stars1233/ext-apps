@@ -63,6 +63,10 @@ export type McpUiToolCancelledNotificationSchemaInferredType = z.infer<
   typeof generated.McpUiToolCancelledNotificationSchema
 >;
 
+export type McpUiHostStylesSchemaInferredType = z.infer<
+  typeof generated.McpUiHostStylesSchema
+>;
+
 export type McpUiResourceTeardownRequestSchemaInferredType = z.infer<
   typeof generated.McpUiResourceTeardownRequestSchema
 >;
@@ -177,6 +181,8 @@ expectType<spec.McpUiToolCancelledNotification>(
 expectType<McpUiToolCancelledNotificationSchemaInferredType>(
   {} as spec.McpUiToolCancelledNotification,
 );
+expectType<spec.McpUiHostStyles>({} as McpUiHostStylesSchemaInferredType);
+expectType<McpUiHostStylesSchemaInferredType>({} as spec.McpUiHostStyles);
 expectType<spec.McpUiResourceTeardownRequest>(
   {} as McpUiResourceTeardownRequestSchemaInferredType,
 );

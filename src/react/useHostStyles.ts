@@ -7,7 +7,7 @@ import { McpUiHostContext } from "../types";
  * React hook that applies host styles and theme as CSS custom properties.
  *
  * This hook listens to host context changes and automatically applies:
- * - `styles` CSS variables to `document.documentElement` (e.g., `--color-background-primary`)
+ * - `styles.variables` CSS variables to `document.documentElement` (e.g., `--color-background-primary`)
  * - `theme` via `color-scheme` CSS property, enabling `light-dark()` CSS function support
  *
  * The hook also applies styles and theme from the initial host context when
@@ -70,10 +70,10 @@ export function useHostStyles(
     if (initialContext?.theme) {
       applyDocumentTheme(initialContext.theme);
     }
-    if (initialContext?.styles) {
-      applyHostStyles(initialContext.styles);
+    if (initialContext?.styles?.variables) {
+      applyHostStyles(initialContext.styles.variables);
     }
-    if (initialContext?.theme || initialContext?.styles) {
+    if (initialContext?.theme || initialContext?.styles?.variables) {
       initialApplied.current = true;
     }
   }, [initialContext]);
@@ -88,8 +88,8 @@ export function useHostStyles(
       if (params.theme) {
         applyDocumentTheme(params.theme);
       }
-      if (params.styles) {
-        applyHostStyles(params.styles);
+      if (params.styles?.variables) {
+        applyHostStyles(params.styles.variables);
       }
     };
   }, [app]);

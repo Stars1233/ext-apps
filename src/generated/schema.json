@@ -265,166 +265,173 @@
               ]
             },
             "styles": {
-              "description": "CSS variables for theming the app.",
+              "description": "Style configuration for theming the app.",
               "type": "object",
-              "propertyNames": {
-                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "const": "--color-background-primary"
+              "properties": {
+                "variables": {
+                  "description": "CSS variables for theming the app.",
+                  "type": "object",
+                  "propertyNames": {
+                    "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "const": "--color-background-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-border-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-border-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-info"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-danger"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-success"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-warning"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-family-sans"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-heading"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-body"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-caption"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-weight-regular"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-weight-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-leading-regular"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-leading-tight"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-heading"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-body"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-body-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-caption"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-caption-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-small"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-medium"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-large"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-full"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-width-regular"
+                      }
+                    ]
                   },
-                  {
-                    "type": "string",
-                    "const": "--color-background-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-background-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-background-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-border-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-border-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-info"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-danger"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-success"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-warning"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-family-sans"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-heading"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-body"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-caption"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-weight-regular"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-weight-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-leading-regular"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-leading-tight"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-heading"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-body"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-body-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-caption"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-caption-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-small"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-medium"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-large"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-full"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-width-regular"
+                  "additionalProperties": {
+                    "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {}
+                    ]
                   }
-                ]
+                }
               },
-              "additionalProperties": {
-                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {}
-                ]
-              }
+              "additionalProperties": false
             },
             "displayMode": {
               "description": "How the UI is currently displayed.",
@@ -713,6 +720,298 @@
           ]
         },
         "styles": {
+          "description": "Style configuration for theming the app.",
+          "type": "object",
+          "properties": {
+            "variables": {
+              "description": "CSS variables for theming the app.",
+              "type": "object",
+              "propertyNames": {
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "--color-background-primary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-background-secondary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-background-tertiary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-background-inverted"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-text-primary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-text-secondary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-text-tertiary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-text-inverted"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-icon-primary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-icon-secondary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-icon-tertiary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-icon-inverted"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-border-primary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-border-secondary"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-accent-info"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-accent-danger"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-accent-success"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--color-accent-warning"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-family-sans"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-size-heading"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-size-body"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-size-caption"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-weight-regular"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-weight-emphasized"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-leading-regular"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-leading-tight"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-style-heading"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-style-body"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-style-body-emphasized"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-style-caption"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--font-style-caption-emphasized"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--border-radius-small"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--border-radius-medium"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--border-radius-large"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--border-radius-full"
+                  },
+                  {
+                    "type": "string",
+                    "const": "--border-width-regular"
+                  }
+                ]
+              },
+              "additionalProperties": {
+                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "displayMode": {
+          "description": "How the UI is currently displayed.",
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "inline"
+            },
+            {
+              "type": "string",
+              "const": "fullscreen"
+            },
+            {
+              "type": "string",
+              "const": "pip"
+            }
+          ]
+        },
+        "availableDisplayModes": {
+          "description": "Display modes the host supports.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "viewport": {
+          "description": "Current and maximum dimensions available to the UI.",
+          "type": "object",
+          "properties": {
+            "width": {
+              "description": "Current viewport width in pixels.",
+              "type": "number"
+            },
+            "height": {
+              "description": "Current viewport height in pixels.",
+              "type": "number"
+            },
+            "maxHeight": {
+              "description": "Maximum available height in pixels (if constrained).",
+              "type": "number"
+            },
+            "maxWidth": {
+              "description": "Maximum available width in pixels (if constrained).",
+              "type": "number"
+            }
+          },
+          "required": ["width", "height"],
+          "additionalProperties": false
+        },
+        "locale": {
+          "description": "User's language and region preference in BCP 47 format.",
+          "type": "string"
+        },
+        "timeZone": {
+          "description": "User's timezone in IANA format.",
+          "type": "string"
+        },
+        "userAgent": {
+          "description": "Host application identifier.",
+          "type": "string"
+        },
+        "platform": {
+          "description": "Platform type for responsive design decisions.",
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "web"
+            },
+            {
+              "type": "string",
+              "const": "desktop"
+            },
+            {
+              "type": "string",
+              "const": "mobile"
+            }
+          ]
+        },
+        "deviceCapabilities": {
+          "description": "Device input capabilities.",
+          "type": "object",
+          "properties": {
+            "touch": {
+              "description": "Whether the device supports touch input.",
+              "type": "boolean"
+            },
+            "hover": {
+              "description": "Whether the device supports hover interactions.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "safeAreaInsets": {
+          "description": "Mobile safe area boundaries in pixels.",
+          "type": "object",
+          "properties": {
+            "top": {
+              "description": "Top safe area inset in pixels.",
+              "type": "number"
+            },
+            "right": {
+              "description": "Right safe area inset in pixels.",
+              "type": "number"
+            },
+            "bottom": {
+              "description": "Bottom safe area inset in pixels.",
+              "type": "number"
+            },
+            "left": {
+              "description": "Left safe area inset in pixels.",
+              "type": "number"
+            }
+          },
+          "required": ["top", "right", "bottom", "left"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "McpUiHostStyles": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "variables": {
           "description": "CSS variables for theming the app.",
           "type": "object",
           "propertyNames": {
@@ -873,122 +1172,6 @@
               {}
             ]
           }
-        },
-        "displayMode": {
-          "description": "How the UI is currently displayed.",
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "inline"
-            },
-            {
-              "type": "string",
-              "const": "fullscreen"
-            },
-            {
-              "type": "string",
-              "const": "pip"
-            }
-          ]
-        },
-        "availableDisplayModes": {
-          "description": "Display modes the host supports.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "viewport": {
-          "description": "Current and maximum dimensions available to the UI.",
-          "type": "object",
-          "properties": {
-            "width": {
-              "description": "Current viewport width in pixels.",
-              "type": "number"
-            },
-            "height": {
-              "description": "Current viewport height in pixels.",
-              "type": "number"
-            },
-            "maxHeight": {
-              "description": "Maximum available height in pixels (if constrained).",
-              "type": "number"
-            },
-            "maxWidth": {
-              "description": "Maximum available width in pixels (if constrained).",
-              "type": "number"
-            }
-          },
-          "required": ["width", "height"],
-          "additionalProperties": false
-        },
-        "locale": {
-          "description": "User's language and region preference in BCP 47 format.",
-          "type": "string"
-        },
-        "timeZone": {
-          "description": "User's timezone in IANA format.",
-          "type": "string"
-        },
-        "userAgent": {
-          "description": "Host application identifier.",
-          "type": "string"
-        },
-        "platform": {
-          "description": "Platform type for responsive design decisions.",
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "web"
-            },
-            {
-              "type": "string",
-              "const": "desktop"
-            },
-            {
-              "type": "string",
-              "const": "mobile"
-            }
-          ]
-        },
-        "deviceCapabilities": {
-          "description": "Device input capabilities.",
-          "type": "object",
-          "properties": {
-            "touch": {
-              "description": "Whether the device supports touch input.",
-              "type": "boolean"
-            },
-            "hover": {
-              "description": "Whether the device supports hover interactions.",
-              "type": "boolean"
-            }
-          },
-          "additionalProperties": false
-        },
-        "safeAreaInsets": {
-          "description": "Mobile safe area boundaries in pixels.",
-          "type": "object",
-          "properties": {
-            "top": {
-              "description": "Top safe area inset in pixels.",
-              "type": "number"
-            },
-            "right": {
-              "description": "Right safe area inset in pixels.",
-              "type": "number"
-            },
-            "bottom": {
-              "description": "Bottom safe area inset in pixels.",
-              "type": "number"
-            },
-            "left": {
-              "description": "Left safe area inset in pixels.",
-              "type": "number"
-            }
-          },
-          "required": ["top", "right", "bottom", "left"],
-          "additionalProperties": false
         }
       },
       "additionalProperties": {}
@@ -1343,166 +1526,173 @@
               ]
             },
             "styles": {
-              "description": "CSS variables for theming the app.",
+              "description": "Style configuration for theming the app.",
               "type": "object",
-              "propertyNames": {
-                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "const": "--color-background-primary"
+              "properties": {
+                "variables": {
+                  "description": "CSS variables for theming the app.",
+                  "type": "object",
+                  "propertyNames": {
+                    "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "const": "--color-background-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-background-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-text-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-tertiary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-icon-inverted"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-border-primary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-border-secondary"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-info"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-danger"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-success"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--color-accent-warning"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-family-sans"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-heading"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-body"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-size-caption"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-weight-regular"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-weight-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-leading-regular"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-leading-tight"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-heading"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-body"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-body-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-caption"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--font-style-caption-emphasized"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-small"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-medium"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-large"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-radius-full"
+                      },
+                      {
+                        "type": "string",
+                        "const": "--border-width-regular"
+                      }
+                    ]
                   },
-                  {
-                    "type": "string",
-                    "const": "--color-background-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-background-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-background-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-text-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-tertiary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-icon-inverted"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-border-primary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-border-secondary"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-info"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-danger"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-success"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--color-accent-warning"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-family-sans"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-heading"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-body"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-size-caption"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-weight-regular"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-weight-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-leading-regular"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-leading-tight"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-heading"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-body"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-body-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-caption"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--font-style-caption-emphasized"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-small"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-medium"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-large"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-radius-full"
-                  },
-                  {
-                    "type": "string",
-                    "const": "--border-width-regular"
+                  "additionalProperties": {
+                    "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {}
+                    ]
                   }
-                ]
+                }
               },
-              "additionalProperties": {
-                "description": "Style variables for theming MCP apps.\n\nIndividual style keys are optional - hosts may provide any subset of these values.\nValues are strings containing CSS values (colors, sizes, font stacks, etc.).\n\nNote: This type uses `Record<K, string | undefined>` rather than `Partial<Record<K, string>>`\nfor compatibility with Zod schema generation. Both are functionally equivalent for validation.",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {}
-                ]
-              }
+              "additionalProperties": false
             },
             "displayMode": {
               "description": "How the UI is currently displayed.",

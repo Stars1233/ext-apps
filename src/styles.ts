@@ -76,12 +76,12 @@ export function applyDocumentTheme(theme: McpUiTheme): void {
 /**
  * Apply host styles as CSS custom properties on an element.
  *
- * This function takes the `styles` object from `McpUiHostContext` and sets
+ * This function takes the `variables` object from `McpUiHostContext.styles` and sets
  * each CSS variable on the specified root element (defaults to `document.documentElement`).
  * This allows apps to use the host's theming values via CSS variables like
  * `var(--color-background-primary)`.
  *
- * @param styles - The styles object from `McpUiHostContext.styles`
+ * @param styles - The styles object from `McpUiHostContext.styles.variables`
  * @param root - The element to apply styles to (defaults to `document.documentElement`)
  *
  * @example Apply styles from host context
@@ -89,8 +89,8 @@ export function applyDocumentTheme(theme: McpUiTheme): void {
  * import { applyHostStyles } from '@modelcontextprotocol/ext-apps';
  *
  * app.onhostcontextchanged = (params) => {
- *   if (params.styles) {
- *     applyHostStyles(params.styles);
+ *   if (params.styles?.variables) {
+ *     applyHostStyles(params.styles.variables);
  *   }
  * };
  * ```
@@ -98,7 +98,7 @@ export function applyDocumentTheme(theme: McpUiTheme): void {
  * @example Apply to a specific element
  * ```typescript
  * const container = document.getElementById('app-root');
- * applyHostStyles(hostContext.styles, container);
+ * applyHostStyles(hostContext.styles?.variables, container);
  * ```
  *
  * @see {@link McpUiStyles} for the available CSS variables
