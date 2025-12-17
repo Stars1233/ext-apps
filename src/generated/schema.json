@@ -585,6 +585,17 @@
                       {}
                     ]
                   }
+                },
+                "css": {
+                  "description": "CSS blocks that apps can inject.",
+                  "type": "object",
+                  "properties": {
+                    "fonts": {
+                      "description": "CSS for font loading (@font-face rules or",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "additionalProperties": false
@@ -1196,6 +1207,17 @@
                   {}
                 ]
               }
+            },
+            "css": {
+              "description": "CSS blocks that apps can inject.",
+              "type": "object",
+              "properties": {
+                "fonts": {
+                  "description": "CSS for font loading (@font-face rules or",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -1318,6 +1340,17 @@
         }
       },
       "additionalProperties": {}
+    },
+    "McpUiHostCss": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "fonts": {
+          "description": "CSS for font loading (@font-face rules or",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "McpUiHostStyles": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1640,6 +1673,17 @@
               {}
             ]
           }
+        },
+        "css": {
+          "description": "CSS blocks that apps can inject.",
+          "type": "object",
+          "properties": {
+            "fonts": {
+              "description": "CSS for font loading (@font-face rules or",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -2314,6 +2358,17 @@
                       {}
                     ]
                   }
+                },
+                "css": {
+                  "description": "CSS blocks that apps can inject.",
+                  "type": "object",
+                  "properties": {
+                    "fonts": {
+                      "description": "CSS for font loading (@font-face rules or",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "additionalProperties": false

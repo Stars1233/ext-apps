@@ -114,3 +114,68 @@ export function applyHostStyleVariables(
     }
   }
 }
+
+/**
+ * Apply host font CSS to the document.
+ *
+ * This function takes the `css.fonts` string from `McpUiHostContext.styles` and
+ * injects it as a `<style>` tag. The CSS can contain `@font-face` rules for
+ * self-hosted fonts, `@import` statements for Google Fonts or other font services,
+ * or a combination of both.
+ *
+ * The styles are only injected once. Subsequent calls will not create duplicate
+ * style tags.
+ *
+ * @param fontCss - CSS string containing @font-face rules and/or @import statements
+ *
+ * @example Apply fonts from host context
+ * ```typescript
+ * import { applyHostFonts } from '@modelcontextprotocol/ext-apps';
+ *
+ * app.onhostcontextchanged = (params) => {
+ *   if (params.styles?.css?.fonts) {
+ *     applyHostFonts(params.styles.css.fonts);
+ *   }
+ * };
+ * ```
+ *
+ * @example Host providing self-hosted fonts
+ * ```typescript
+ * hostContext.styles.css.fonts = `
+ *   @font-face {
+ *     font-family: "Anthropic Sans";
+ *     src: url("https://assets.anthropic.com/.../Regular.otf") format("opentype");
+ *     font-weight: 400;
+ *   }
+ * `;
+ * ```
+ *
+ * @example Host providing Google Fonts
+ * ```typescript
+ * hostContext.styles.css.fonts = `
+ *   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+ * `;
+ * ```
+ *
+ * @example Use host fonts in CSS
+ * ```css
+ * body {
+ *   font-family: "Anthropic Sans", sans-serif;
+ * }
+ * ```
+ *
+ * @see {@link McpUiHostContext} for the full host context structure
+ */
+export function applyHostFonts(fontCss: string): void {
+  const styleId = "__mcp-host-fonts";
+
+  // Check if already loaded
+  if (document.getElementById(styleId)) {
+    return;
+  }
+
+  const style = document.createElement("style");
+  style.id = styleId;
+  style.textContent = fontCss;
+  document.head.appendChild(style);
+}

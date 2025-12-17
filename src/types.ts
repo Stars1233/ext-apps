@@ -16,6 +16,7 @@ export {
   type McpUiDisplayMode,
   type McpUiStyleVariableKey,
   type McpUiStyles,
+  type McpUiHostCss,
   type McpUiHostStyles,
   type McpUiOpenLinkRequest,
   type McpUiOpenLinkResult,
@@ -72,6 +73,7 @@ import type {
 export {
   McpUiThemeSchema,
   McpUiDisplayModeSchema,
+  McpUiHostCssSchema,
   McpUiHostStylesSchema,
   McpUiOpenLinkRequestSchema,
   McpUiOpenLinkResultSchema,

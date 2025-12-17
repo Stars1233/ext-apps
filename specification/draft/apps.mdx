@@ -451,6 +451,11 @@ interface HostContext {
   styles?: {
     /** CSS variables for theming */
     variables?: Record<McpUiStyleVariableKey, string | undefined>;
+    /** CSS blocks that apps can inject */
+    css?: {
+      /** CSS for font loading (@font-face rules or @import statements) */
+      fonts?: string;
+    };
   };
   /** How the UI is currently displayed */
   displayMode?: "inline" | "fullscreen" | "pip";
@@ -503,8 +508,11 @@ Example:
         "variables": {
           "--color-background-primary": "light-dark(#ffffff, #171717)",
           "--color-text-primary": "light-dark(#171717, #fafafa)",
-          "--font-family-sans": "system-ui, sans-serif",
+          "--font-sans": "Anthropic Sans, sans-serif",
           ...
+        },
+        "css": {
+          "fonts": "@font-face { font-family: \"Custom Font Name\"; src: url(\"https://...\"); }"
         }
       },
       "displayMode": "inline",
@@ -638,7 +646,46 @@ Example usage of standardized CSS variables:
 .container {
   background: var(--color-background-primary);
   color: var(--color-text-primary);
-  font: var(--font-style-body);
+  font-family: var(--font-sans);
+}
+```
+
+#### Custom Fonts
+
+Hosts can provide custom fonts via `styles.css.fonts`, which can contain `@font-face` rules for self-hosted fonts, `@import` statements for font services like Google Fonts, or both:
+
+```typescript
+hostContext.styles.variables["--font-sans"] = '"Font Name", sans-serif';
+
+// Self-hosted fonts
+hostContext.styles.css.fonts = `
+  @font-face {
+    font-family: "Font Name";
+    src: url("https://url-where-font-is-hosted.com/.../Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Font Name";
+    src: url("https://url-where-font-is-hosted.com/.../Medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: medium;
+    font-display: swap;
+  }
+`;
+
+// Google Fonts
+hostContext.styles.css.fonts = `
+  @import url('https://fonts.googleapis.com/css2?family=Font+Name&display=swap');
+`;
+```
+
+Apps can use the `applyHostFonts` utility to inject the font CSS into the document:
+
+```typescript
+if (hostContext.styles?.css?.fonts) {
+  applyHostFonts(hostContext.styles.css.fonts);
 }
 ```
 

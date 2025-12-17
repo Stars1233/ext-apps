@@ -10,6 +10,7 @@
  *
  * - {@link useApp} - React hook to create and connect an MCP App
  * - {@link useHostStyleVariables} - React hook to apply host style variables and theme
+ * - {@link useHostFonts} - React hook to apply host fonts
  * - {@link useDocumentTheme} - React hook for reactive document theme
  * - {@link useAutoResize} - React hook for manual auto-resize control (rarely needed)
  *

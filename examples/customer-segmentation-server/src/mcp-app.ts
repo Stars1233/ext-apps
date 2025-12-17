@@ -5,6 +5,7 @@ import {
   App,
   PostMessageTransport,
   applyHostStyleVariables,
+  applyHostFonts,
   applyDocumentTheme,
 } from "@modelcontextprotocol/ext-apps";
 import { Chart, registerables } from "chart.js";
@@ -448,13 +449,16 @@ applyDocumentTheme(systemDark ? "dark" : "light");
 // Register handlers and connect
 app.onerror = log.error;
 
-// Handle host context changes (theme and styles from host)
+// Handle host context changes (theme, styles, and fonts from host)
 app.onhostcontextchanged = (params) => {
   if (params.theme) {
     applyDocumentTheme(params.theme);
   }
   if (params.styles?.variables) {
     applyHostStyleVariables(params.styles.variables);
+  }
+  if (params.styles?.css?.fonts) {
+    applyHostFonts(params.styles.css.fonts);
   }
   // Recreate chart to pick up new colors
   if (state.chart && (params.theme || params.styles?.variables)) {
@@ -471,6 +475,9 @@ app.connect().then(() => {
   }
   if (ctx?.styles?.variables) {
     applyHostStyleVariables(ctx.styles.variables);
+  }
+  if (ctx?.styles?.css?.fonts) {
+    applyHostFonts(ctx.styles.css.fonts);
   }
 });
 

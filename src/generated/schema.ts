@@ -286,12 +286,27 @@ export const McpUiToolCancelledNotificationSchema = z.object({
 });
 
 /**
+ * @description CSS blocks that can be injected by apps.
+ */
+export const McpUiHostCssSchema = z.object({
+  /** @description CSS for font loading (@font-face rules or @import statements). Apps must apply using applyHostFonts(). */
+  fonts: z
+    .string()
+    .optional()
+    .describe("CSS for font loading (@font-face rules or"),
+});
+
+/**
  * @description Style configuration for theming MCP apps.
  */
 export const McpUiHostStylesSchema = z.object({
   /** @description CSS variables for theming the app. */
   variables: McpUiStylesSchema.optional().describe(
     "CSS variables for theming the app.",
+  ),
+  /** @description CSS blocks that apps can inject. */
+  css: McpUiHostCssSchema.optional().describe(
+    "CSS blocks that apps can inject.",
   ),
 });
 
