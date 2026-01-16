@@ -1,5 +1,6 @@
 import { RESOURCE_MIME_TYPE, getToolUiResourceUri, type McpUiSandboxProxyReadyNotification, AppBridge, PostMessageTransport, type McpUiResourceCsp, type McpUiResourcePermissions, buildAllowAttribute, type McpUiUpdateModelContextRequest, type McpUiMessageRequest } from "@modelcontextprotocol/ext-apps/app-bridge";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import type { CallToolResult, Tool } from "@modelcontextprotocol/sdk/types.js";
 
@@ -24,11 +25,8 @@ export interface ServerInfo {
 
 
 export async function connectToServer(serverUrl: URL): Promise<ServerInfo> {
-  const client = new Client(IMPLEMENTATION);
-
   log.info("Connecting to server:", serverUrl.href);
-  await client.connect(new StreamableHTTPClientTransport(serverUrl));
-  log.info("Connection successful");
+  const client = await connectWithFallback(serverUrl);
 
   const name = client.getServerVersion()?.name ?? serverUrl.href;
 
@@ -37,6 +35,28 @@ export async function connectToServer(serverUrl: URL): Promise<ServerInfo> {
   log.info("Server tools:", Array.from(tools.keys()));
 
   return { name, client, tools, appHtmlCache: new Map() };
+}
+
+async function connectWithFallback(serverUrl: URL): Promise<Client> {
+  // Try Streamable HTTP first (modern transport)
+  try {
+    const client = new Client(IMPLEMENTATION);
+    await client.connect(new StreamableHTTPClientTransport(serverUrl));
+    log.info("Connected via Streamable HTTP transport");
+    return client;
+  } catch (streamableError) {
+    log.info("Streamable HTTP failed:", streamableError);
+  }
+
+  // Fall back to SSE (deprecated but needed for older servers)
+  try {
+    const client = new Client(IMPLEMENTATION);
+    await client.connect(new SSEClientTransport(serverUrl));
+    log.info("Connected via SSE transport");
+    return client;
+  } catch (sseError) {
+    throw new Error(`Could not connect with any transport. SSE error: ${sseError}`);
+  }
 }
 
 
