@@ -19,7 +19,11 @@ Then add to your MCP client configuration (stdio transport), replacing the path 
   "mcpServers": {
     "qr": {
       "command": "uv",
-      "args": ["run", "/path/to/ext-apps/examples/qr-server/server.py", "--stdio"]
+      "args": [
+        "run",
+        "/path/to/ext-apps/examples/qr-server/server.py",
+        "--stdio"
+      ]
     }
   }
 }

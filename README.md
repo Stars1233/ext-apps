@@ -89,83 +89,201 @@ Add to your MCP client configuration (stdio transport):
   "mcpServers": {
     "basic-react": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-react", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-react",
+        "--stdio"
+      ]
     },
     "basic-vanillajs": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-vanillajs", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-vanillajs",
+        "--stdio"
+      ]
     },
     "basic-vue": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-vue", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-vue",
+        "--stdio"
+      ]
     },
     "basic-svelte": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-svelte", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-svelte",
+        "--stdio"
+      ]
     },
     "basic-preact": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-preact", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-preact",
+        "--stdio"
+      ]
     },
     "basic-solid": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-basic-solid", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-basic-solid",
+        "--stdio"
+      ]
     },
     "budget-allocator": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-budget-allocator", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-budget-allocator",
+        "--stdio"
+      ]
     },
     "cohort-heatmap": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-cohort-heatmap", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-cohort-heatmap",
+        "--stdio"
+      ]
     },
     "customer-segmentation": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-customer-segmentation", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-customer-segmentation",
+        "--stdio"
+      ]
     },
     "map": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-map", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-map",
+        "--stdio"
+      ]
     },
     "pdf": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-pdf", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-pdf",
+        "--stdio"
+      ]
     },
     "scenario-modeler": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-scenario-modeler", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-scenario-modeler",
+        "--stdio"
+      ]
     },
     "shadertoy": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-shadertoy", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-shadertoy",
+        "--stdio"
+      ]
     },
     "sheet-music": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-sheet-music", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-sheet-music",
+        "--stdio"
+      ]
     },
     "system-monitor": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-system-monitor", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-system-monitor",
+        "--stdio"
+      ]
     },
     "threejs": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-threejs", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-threejs",
+        "--stdio"
+      ]
     },
     "transcript": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-transcript", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-transcript",
+        "--stdio"
+      ]
     },
     "video-resource": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-video-resource", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-video-resource",
+        "--stdio"
+      ]
     },
     "wiki-explorer": {
       "command": "npx",
-      "args": ["-y", "--silent", "--registry=https://registry.npmjs.org/", "@modelcontextprotocol/server-wiki-explorer", "--stdio"]
+      "args": [
+        "-y",
+        "--silent",
+        "--registry=https://registry.npmjs.org/",
+        "@modelcontextprotocol/server-wiki-explorer",
+        "--stdio"
+      ]
     },
     "qr": {
       "command": "uv",
-      "args": ["run", "/path/to/ext-apps/examples/qr-server/server.py", "--stdio"]
+      "args": [
+        "run",
+        "/path/to/ext-apps/examples/qr-server/server.py",
+        "--stdio"
+      ]
     }
   }
 }
