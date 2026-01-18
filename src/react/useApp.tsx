@@ -30,18 +30,7 @@ export interface UseAppOptions {
    * @param app - The newly created `App` instance
    *
    * @example Register a notification handler
-   * ```typescript
-   * import { McpUiToolInputNotificationSchema } from '@modelcontextprotocol/ext-apps/react';
-   *
-   * onAppCreated: (app) => {
-   *   app.setNotificationHandler(
-   *     McpUiToolInputNotificationSchema,
-   *     (notification) => {
-   *       console.log("Tool input:", notification.params.arguments);
-   *     }
-   *   );
-   * }
-   * ```
+   * {@includeCode ./useApp.examples.tsx#useApp_registerHandler}
    */
   onAppCreated?: (app: App) => void;
 }
@@ -81,29 +70,7 @@ export interface AppState {
  *   timeouts, initialization handshake failures, or transport errors).
  *
  * @example Basic usage
- * ```typescript
- * import { useApp, McpUiToolInputNotificationSchema } from '@modelcontextprotocol/ext-apps/react';
- *
- * function MyApp() {
- *   const { app, isConnected, error } = useApp({
- *     appInfo: { name: "MyApp", version: "1.0.0" },
- *     capabilities: {},
- *     onAppCreated: (app) => {
- *       // Register handlers before connection
- *       app.setNotificationHandler(
- *         McpUiToolInputNotificationSchema,
- *         (notification) => {
- *           console.log("Tool input:", notification.params.arguments);
- *         }
- *       );
- *     },
- *   });
- *
- *   if (error) return <div>Error: {error.message}</div>;
- *   if (!isConnected) return <div>Connecting...</div>;
- *   return <div>Connected!</div>;
- * }
- * ```
+ * {@includeCode ./useApp.examples.tsx#useApp_basicUsage}
  *
  * @see {@link App.connect} for the underlying connection method
  * @see {@link useAutoResize} for manual auto-resize control when using custom App options

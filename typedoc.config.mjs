@@ -17,6 +17,9 @@ const config = {
   gitRevision: "main",
   excludePrivate: true,
   excludeInternal: false,
+  jsDocCompatibility: {
+    exampleTag: false,
+  },
   categorizeByGroup: true,
   navigationLinks: {
     GitHub: "https://github.com/modelcontextprotocol/ext-apps",

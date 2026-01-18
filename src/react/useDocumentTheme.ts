@@ -15,35 +15,10 @@ import { McpUiTheme } from "../types";
  * @returns The current theme ("light" or "dark")
  *
  * @example Conditionally render based on theme
- * ```tsx
- * import { useDocumentTheme } from '@modelcontextprotocol/ext-apps/react';
- *
- * function MyApp() {
- *   const theme = useDocumentTheme();
- *
- *   return (
- *     <div>
- *       {theme === 'dark' ? <DarkIcon /> : <LightIcon />}
- *     </div>
- *   );
- * }
- * ```
+ * {@includeCode ./useDocumentTheme.examples.tsx#useDocumentTheme_conditionalRender}
  *
  * @example Use with theme-aware styling
- * ```tsx
- * function ThemedButton() {
- *   const theme = useDocumentTheme();
- *
- *   return (
- *     <button style={{
- *       background: theme === 'dark' ? '#333' : '#fff',
- *       color: theme === 'dark' ? '#fff' : '#333',
- *     }}>
- *       Click me
- *     </button>
- *   );
- * }
- * ```
+ * {@includeCode ./useDocumentTheme.examples.tsx#useDocumentTheme_themedButton}
  *
  * @see {@link getDocumentTheme} for the underlying function
  * @see {@link applyDocumentTheme} to set the theme

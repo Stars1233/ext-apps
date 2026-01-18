@@ -78,9 +78,13 @@ Guest UI (App) <--PostMessageTransport--> Host (AppBridge) <--MCP Client--> MCP 
 6. Host sends `sendToolResult()` when tool execution completes
 7. Host calls `teardownResource()` before unmounting iframe
 
-## Examples
+## Documentation
 
-Uses npm workspaces. Examples in `examples/` are separate packages:
+JSDoc `@example` tags use `{@includeCode ./file.examples.ts#regionName}` to pull in type-checked code from companion `.examples.ts`/`.examples.tsx` files. Regions are marked with `//#region name` and `//#endregion name`, wrapped in functions (whose parameters provide types for external values). Region names follow `exportedName_variant` or `ClassName_methodName_variant` pattern (e.g., `useApp_basicUsage`, `App_hostCapabilities_checkAfterConnection`).
+
+## Full Examples
+
+Uses npm workspaces. Full examples in `examples/` are separate packages:
 
 - `basic-server-*` - Starter templates (vanillajs, react, vue, svelte, preact, solid). Use these as the basis for new examples.
 - `basic-host` - Reference host implementation

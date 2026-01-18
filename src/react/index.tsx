@@ -17,21 +17,7 @@
  * @module @modelcontextprotocol/ext-apps/react
  *
  * @example Basic React App
- * ```tsx
- * import { useApp } from '@modelcontextprotocol/ext-apps/react';
- *
- * function MyApp() {
- *   const { app, isConnected, error } = useApp({
- *     appInfo: { name: "MyApp", version: "1.0.0" },
- *     capabilities: {}
- *   });
- *
- *   if (error) return <div>Error: {error.message}</div>;
- *   if (!isConnected) return <div>Connecting...</div>;
- *
- *   return <div>Connected!</div>;
- * }
- * ```
+ * {@includeCode ./index.examples.tsx#index_basicReactApp}
  */
 export * from "./useApp";
 export * from "./useAutoResize";
