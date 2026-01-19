@@ -174,25 +174,25 @@ interface UIResourceMeta {
      *
      * Maps to Permission Policy `camera` feature
      */
-    camera?: boolean,
+    camera?: {},
     /**
      * Request microphone access
      *
      * Maps to Permission Policy `microphone` feature
      */
-    microphone?: boolean,
+    microphone?: {},
     /**
      * Request geolocation access
      *
      * Maps to Permission Policy `geolocation` feature
      */
-    geolocation?: boolean,
+    geolocation?: {},
     /**
      * Request clipboard write access
      *
      * Maps to Permission Policy `clipboard-write` feature
      */
-    clipboardWrite?: boolean,
+    clipboardWrite?: {},
   },
   /**
    * Dedicated origin for widget
@@ -239,10 +239,10 @@ The resource content is returned via `resources/read`:
           baseUriDomains?: string[]; // Allowed base URIs for the document (base-uri directive).
         };
         permissions?: {
-          camera?: boolean;           // Request camera access
-          microphone?: boolean;       // Request microphone access
-          geolocation?: boolean;      // Request geolocation access
-          clipboardWrite?: boolean;   // Request clipboard write access
+          camera?: {};           // Request camera access
+          microphone?: {};       // Request microphone access
+          geolocation?: {};      // Request geolocation access
+          clipboardWrite?: {};   // Request clipboard write access
         };
         domain?: string;
         prefersBorder?: boolean;
@@ -615,10 +615,10 @@ interface HostCapabilities {
   sandbox?: {
     /** Permissions granted by the host (camera, microphone, geolocation, clipboard-write). */
     permissions?: {
-      camera?: boolean;
-      microphone?: boolean;
-      geolocation?: boolean;
-      clipboardWrite?: boolean;
+      camera?: {};
+      microphone?: {};
+      geolocation?: {};
+      clipboardWrite?: {};
     };
     /** CSP domains approved by the host. */
     csp?: {
@@ -1179,10 +1179,10 @@ These messages are reserved for web-based hosts that implement the recommended d
       baseUriDomains?: string[],
     },
     permissions?: {      // Sandbox permissions from resource metadata
-      camera?: boolean,
-      microphone?: boolean,
-      geolocation?: boolean,
-      clipboardWrite?: boolean,
+      camera?: {},
+      microphone?: {},
+      geolocation?: {},
+      clipboardWrite?: {},
     }
   }
 }
