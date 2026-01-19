@@ -32,15 +32,6 @@ function errorsToModel(app: App) {
 }
 
 /**
- * Example: Support native host styling / use CSS variables
- */
-function hostStyling() {
-  //#region hostStyling
-  // TODO: Implement host styling support via CSS variables
-  //#endregion hostStyling
-}
-
-/**
  * Example: Reacting to light/dark theme changes
  */
 function lightDarkTheme(app: App) {
@@ -112,7 +103,6 @@ function migrateFromOpenai() {
 // Suppress unused variable warnings
 void authenticatedCalls;
 void errorsToModel;
-void hostStyling;
 void lightDarkTheme;
 void fullscreen;
 void persistData;

@@ -43,11 +43,23 @@ function applyDocumentTheme_fromHostContext(app: App) {
  */
 function applyHostStyleVariables_fromHostContext(app: App) {
   //#region applyHostStyleVariables_fromHostContext
+  // Use CSS variables in your styles
+  document.body.style.background = "var(--color-background-primary)";
+
+  // Apply when host context changes
   app.onhostcontextchanged = (params) => {
     if (params.styles?.variables) {
       applyHostStyleVariables(params.styles.variables);
     }
   };
+
+  // Apply initial styles after connecting
+  app.connect().then(() => {
+    const ctx = app.getHostContext();
+    if (ctx?.styles?.variables) {
+      applyHostStyleVariables(ctx.styles.variables);
+    }
+  });
   //#endregion applyHostStyleVariables_fromHostContext
 }
 

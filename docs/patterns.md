@@ -27,9 +27,17 @@ Set {@link types!McpUiToolMeta.visibility Tool.\_meta.ui.visibility} to `["app"]
 
 {@includeCode ./patterns.ts#errorsToModel}
 
-## [TODO] Support native host styling / use CSS variables
+## Support native host styling using CSS variables
 
-{@includeCode ./patterns.ts#hostStyling}
+Hosts provide CSS variables (e.g., `--color-background-primary`) that match their theme. Apply these to the document, then use them in your styles via `var()`.
+
+**Vanilla JS:**
+
+{@includeCode ../src/styles.examples.ts#applyHostStyleVariables_fromHostContext}
+
+**React:**
+
+{@includeCode ../src/react/useHostStyles.examples.tsx#useHostStyles_basicUsage}
 
 ## [TODO] Reacting to light/dark theme changes
 
