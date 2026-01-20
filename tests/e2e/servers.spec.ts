@@ -16,6 +16,7 @@ const DYNAMIC_MASKS: Record<string, string[]> = {
   "basic-vue": ["#server-time"], // Server time display
   "cohort-heatmap": ['[class*="heatmapWrapper"]'], // Heatmap grid (random data)
   "customer-segmentation": [".chart-container"], // Scatter plot (random data)
+  "say-server": [".playBtn", ".playOverlayBtn"], // Play buttons may have different states
   shadertoy: ["#canvas"], // WebGL shader canvas (animated)
   "system-monitor": [
     ".chart-container", // CPU chart (highly dynamic)

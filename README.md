@@ -67,8 +67,8 @@ Or edit your `package.json` manually:
 | [**Scenario Modeler**](examples/scenario-modeler-server) | [**Budget Allocator**](examples/budget-allocator-server) | [**Customer Segmentation**](examples/customer-segmentation-server) |
 | [![System Monitor](examples/system-monitor-server/grid-cell.png "Real-time OS metrics")](examples/system-monitor-server) | [![Transcript](examples/transcript-server/grid-cell.png "Live speech transcription")](examples/transcript-server) | [![Video Resource](examples/video-resource-server/grid-cell.png "Binary video via MCP resources")](examples/video-resource-server) |
 | [**System Monitor**](examples/system-monitor-server) | [**Transcript**](examples/transcript-server) | [**Video Resource**](examples/video-resource-server) |
-| [![PDF Server](examples/pdf-server/grid-cell.png "Interactive PDF viewer with chunked loading")](examples/pdf-server) | [![QR Code](examples/qr-server/grid-cell.png "QR code generator")](examples/qr-server) | |
-| [**PDF Server**](examples/pdf-server) | [**QR Code (Python)**](examples/qr-server) | |
+| [![PDF Server](examples/pdf-server/grid-cell.png "Interactive PDF viewer with chunked loading")](examples/pdf-server) | [![QR Code](examples/qr-server/grid-cell.png "QR code generator")](examples/qr-server) | [![Say Demo](examples/say-server/grid-cell.png "Text-to-speech demo")](examples/say-server) |
+| [**PDF Server**](examples/pdf-server) | [**QR Code (Python)**](examples/qr-server) | [**Say Demo**](examples/say-server) |
 
 ### Starter Templates
 
