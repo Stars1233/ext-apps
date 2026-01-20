@@ -24,20 +24,10 @@ import {
  * ## Usage
  *
  * **Guest UI**:
- * ```typescript
- * const transport = new PostMessageTransport(window.parent, window.parent);
- * await app.connect(transport);
- * ```
+ * {@includeCode ./message-transport.examples.ts#PostMessageTransport_guestUI}
  *
  * **Host**:
- * ```typescript
- * const iframe = document.getElementById('app-iframe') as HTMLIFrameElement;
- * const transport = new PostMessageTransport(
- *   iframe.contentWindow!,
- *   iframe.contentWindow!
- * );
- * await bridge.connect(transport);
- * ```
+ * {@includeCode ./message-transport.examples.ts#PostMessageTransport_host}
  *
  * @see {@link app!App.connect} for Guest UI usage
  * @see {@link app-bridge!AppBridge.connect} for Host usage
@@ -56,18 +46,10 @@ export class PostMessageTransport implements Transport {
    *   `window.parent`. For hosts, pass `iframe.contentWindow`.
    *
    * @example Guest UI connecting to parent
-   * ```typescript
-   * const transport = new PostMessageTransport(window.parent, window.parent);
-   * ```
+   * {@includeCode ./message-transport.examples.ts#PostMessageTransport_constructor_guestUI}
    *
    * @example Host connecting to iframe
-   * ```typescript
-   * const iframe = document.getElementById('app') as HTMLIFrameElement;
-   * const transport = new PostMessageTransport(
-   *   iframe.contentWindow!,
-   *   iframe.contentWindow!
-   * );
-   * ```
+   * {@includeCode ./message-transport.examples.ts#PostMessageTransport_constructor_host}
    */
   constructor(
     private eventTarget: Window = window.parent,

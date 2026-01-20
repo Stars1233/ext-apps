@@ -26,25 +26,7 @@ import { McpUiHostContext } from "../types";
  *   If provided, styles and theme will be applied immediately on mount.
  *
  * @example
- * ```tsx
- * import { useApp, useHostStyleVariables } from '@modelcontextprotocol/ext-apps/react';
- *
- * function MyApp() {
- *   const { app, isConnected } = useApp({
- *     appInfo: { name: "MyApp", version: "1.0.0" },
- *     capabilities: {},
- *   });
- *
- *   // Apply host styles - pass initial context to apply styles from connect() immediately
- *   useHostStyleVariables(app, app?.getHostContext());
- *
- *   return (
- *     <div style={{ background: 'var(--color-background-primary)' }}>
- *       Hello!
- *     </div>
- *   );
- * }
- * ```
+ * {@includeCode ./useHostStyles.examples.tsx#useHostStyleVariables_basicUsage}
  *
  * @see {@link applyHostStyleVariables} for the underlying styles function
  * @see {@link applyDocumentTheme} for the underlying theme function
@@ -107,35 +89,7 @@ export function useHostStyleVariables(
  *   If provided, fonts will be applied immediately on mount.
  *
  * @example Basic usage with useApp
- * ```tsx
- * import { useApp } from '@modelcontextprotocol/ext-apps/react';
- * import { useHostFonts } from '@modelcontextprotocol/ext-apps/react';
- *
- * function MyApp() {
- *   const { app, isConnected } = useApp({
- *     appInfo: { name: "MyApp", version: "1.0.0" },
- *     capabilities: {},
- *   });
- *
- *   // Automatically apply host fonts
- *   useHostFonts(app);
- *
- *   return (
- *     <div style={{ fontFamily: 'var(--font-sans)' }}>
- *       Hello!
- *     </div>
- *   );
- * }
- * ```
- *
- * @example With initial context
- * ```tsx
- * const [hostContext, setHostContext] = useState<McpUiHostContext | null>(null);
- *
- * // ... get initial context from app.connect() result
- *
- * useHostFonts(app, hostContext);
- * ```
+ * {@includeCode ./useHostStyles.examples.tsx#useHostFonts_basicUsage}
  *
  * @see {@link applyHostFonts} for the underlying fonts function
  * @see {@link useHostStyleVariables} for applying style variables and theme
@@ -182,14 +136,7 @@ export function useHostFonts(
  *   Pass `app?.getHostContext()` to apply styles immediately on mount.
  *
  * @example
- * ```tsx
- * function MyApp() {
- *   const { app } = useApp({ appInfo, capabilities: {} });
- *   useHostStyles(app, app?.getHostContext());
- *
- *   return <div style={{ background: 'var(--color-background-primary)' }}>...</div>;
- * }
- * ```
+ * {@includeCode ./useHostStyles.examples.tsx#useHostStyles_basicUsage}
  *
  * @see {@link useHostStyleVariables} for style variables and theme only
  * @see {@link useHostFonts} for fonts only
