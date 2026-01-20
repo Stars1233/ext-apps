@@ -303,7 +303,7 @@ Add to your MCP client configuration (stdio transport):
 
 </details>
 
-To run all examples:
+To run all examples locally in dev mode:
 
 ```bash
 npm install
