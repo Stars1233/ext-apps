@@ -8,6 +8,7 @@ const config = {
   },
   gitRevision: "main",
   projectDocuments: [
+    "docs/overview.md",
     "docs/quickstart.md",
     "docs/patterns.md",
     "docs/migrate_from_openai_apps.md",
@@ -38,7 +39,12 @@ const config = {
       "https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/draft/apps.mdx",
   },
   out: "docs/api",
-  plugin: ["typedoc-github-theme"],
+  plugin: [
+    "typedoc-github-theme",
+    "./scripts/typedoc-plugin-fix-mermaid-entities.mjs",
+    "@boneskull/typedoc-plugin-mermaid",
+  ],
+  ignoredHighlightLanguages: ["mermaid"],
 };
 
 export default config;
