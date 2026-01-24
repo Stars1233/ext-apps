@@ -17,6 +17,7 @@ const DYNAMIC_MASKS: Record<string, string[]> = {
   "cohort-heatmap": ['[class*="heatmapWrapper"]'], // Heatmap grid (random data)
   "customer-segmentation": [".chart-container"], // Scatter plot (random data)
   "debug-server": ["#event-log", "#callback-table-body"], // Event log and callback counts (dynamic)
+  quickstart: ["#server-time"], // Server time display
   "say-server": [".playBtn", ".playOverlayBtn"], // Play buttons may have different states
   shadertoy: ["#canvas"], // WebGL shader canvas (animated)
   "system-monitor": [
@@ -101,6 +102,11 @@ const ALL_SERVERS = [
   { key: "map-server", name: "CesiumJS Map Server", dir: "map-server" },
   { key: "pdf-server", name: "PDF Server", dir: "pdf-server" },
   { key: "qr-server", name: "QR Code Server", dir: "qr-server" },
+  {
+    key: "quickstart",
+    name: "Quickstart MCP App Server",
+    dir: "quickstart",
+  },
   { key: "say-server", name: "Say Demo", dir: "say-server" },
   {
     key: "scenario-modeler",
