@@ -1,7 +1,7 @@
 /**
  * @file Sheet Music App - renders ABC notation with abcjs and provides audio playback
  */
-import { App } from "@modelcontextprotocol/ext-apps";
+import { App, type McpUiHostContext } from "@modelcontextprotocol/ext-apps";
 import ABCJS from "abcjs";
 import "abcjs/abcjs-audio.css";
 import "./global.css";
@@ -109,18 +109,20 @@ app.ontoolinput = (params) => {
 
 app.onerror = console.error;
 
-app.onhostcontextchanged = (params) => {
-  if (params.safeAreaInsets) {
-    mainEl.style.paddingTop = `${params.safeAreaInsets.top}px`;
-    mainEl.style.paddingRight = `${params.safeAreaInsets.right}px`;
-    mainEl.style.paddingBottom = `${params.safeAreaInsets.bottom}px`;
-    mainEl.style.paddingLeft = `${params.safeAreaInsets.left}px`;
+function handleHostContextChanged(ctx: McpUiHostContext) {
+  if (ctx.safeAreaInsets) {
+    mainEl.style.paddingTop = `${ctx.safeAreaInsets.top}px`;
+    mainEl.style.paddingRight = `${ctx.safeAreaInsets.right}px`;
+    mainEl.style.paddingBottom = `${ctx.safeAreaInsets.bottom}px`;
+    mainEl.style.paddingLeft = `${ctx.safeAreaInsets.left}px`;
   }
-};
+}
+
+app.onhostcontextchanged = handleHostContextChanged;
 
 app.connect().then(() => {
   const ctx = app.getHostContext();
   if (ctx) {
-    app.onhostcontextchanged(ctx);
+    handleHostContextChanged(ctx);
   }
 });
