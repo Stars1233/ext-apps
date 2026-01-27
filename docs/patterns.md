@@ -345,14 +345,46 @@ return {
 
 <!-- prettier-ignore -->
 ```tsx source="./patterns.tsx#persistData"
-// In your tool callback, include viewUUID in the result metadata.
-return {
-  content: [{ type: "text", text: `Displaying PDF viewer for "${title}"` }],
-  structuredContent: { url, title, pageCount, initialPage: 1 },
-  _meta: {
-    viewUUID: randomUUID(),
-  },
+// Store the viewUUID received from the server
+let viewUUID: string | undefined;
+
+// Helper to save state to localStorage
+function saveState<T>(state: T): void {
+  if (!viewUUID) return;
+  try {
+    localStorage.setItem(viewUUID, JSON.stringify(state));
+  } catch (err) {
+    console.error("Failed to save view state:", err);
+  }
+}
+
+// Helper to load state from localStorage
+function loadState<T>(): T | null {
+  if (!viewUUID) return null;
+  try {
+    const saved = localStorage.getItem(viewUUID);
+    return saved ? (JSON.parse(saved) as T) : null;
+  } catch (err) {
+    console.error("Failed to load view state:", err);
+    return null;
+  }
+}
+
+// Receive viewUUID from the tool result
+app.ontoolresult = (result) => {
+  viewUUID = result._meta?.viewUUID
+    ? String(result._meta.viewUUID)
+    : undefined;
+
+  // Restore any previously saved state
+  const savedState = loadState<{ currentPage: number }>();
+  if (savedState) {
+    // Apply restored state to your UI...
+  }
 };
+
+// Call saveState() whenever your view state changes
+// e.g., saveState({ currentPage: 5 });
 ```
 
 _See [`examples/map-server/`](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/map-server) for a full implementation of this pattern._

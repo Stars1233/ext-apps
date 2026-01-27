@@ -254,8 +254,9 @@ function extractRegion(
     );
   }
 
-  const regionStart = `//#region ${regionName}`;
-  const regionEnd = `//#endregion ${regionName}`;
+  const lineEnding = exampleContent.includes("\r\n") ? "\r\n" : "\n";
+  const regionStart = `//#region ${regionName}${lineEnding}`;
+  const regionEnd = `//#endregion ${regionName}${lineEnding}`;
 
   const startIndex = exampleContent.indexOf(regionStart);
   if (startIndex === -1) {
