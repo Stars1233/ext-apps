@@ -90,10 +90,7 @@ _Tool input:_
 
 ```json
 {
-  "fragmentShader": "void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    vec2 uv = fragCoord / iResolution.xy;
-    fragColor = vec4(uv, 0.5 + 0.5*sin(iTime), 1.0);
-}"
+  "fragmentShader": "void mainImage(out vec4 fragColor, in vec2 fragCoord) {\n    vec2 uv = fragCoord / iResolution.xy;\n    fragColor = vec4(uv, 0.5 + 0.5*sin(iTime), 1.0);\n}"
 }
 ```
 
@@ -122,22 +119,7 @@ _Tool input:_
 
 ```json
 {
-  "fragmentShader": "void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    vec2 uv = (fragCoord - 0.5 * iResolution.xy) / iResolution.y;
-    float segments = 6.0;
-    float zoom = 1.0 + 0.3 * sin(iTime * 0.2);
-    float angle = atan(uv.y, uv.x) + iTime * 0.3;
-    float r = length(uv) * zoom;
-    angle = mod(angle, 6.28 / segments);
-    angle = abs(angle - 3.14 / segments);
-    vec2 p = vec2(cos(angle), sin(angle)) * r;
-    p += iTime * 0.1;
-    float v = sin(p.x * 10.0) * sin(p.y * 10.0);
-    v += sin(length(p) * 15.0 - iTime * 2.0);
-    v += sin(p.x * 5.0 + p.y * 7.0 + iTime);
-    vec3 col = 0.5 + 0.5 * cos(v * 2.0 + vec3(0.0, 2.0, 4.0) + iTime);
-    fragColor = vec4(col, 1.0);
-}"
+  "fragmentShader": "void mainImage(out vec4 fragColor, in vec2 fragCoord) {\n    vec2 uv = (fragCoord - 0.5 * iResolution.xy) / iResolution.y;\n    float segments = 6.0;\n    float zoom = 1.0 + 0.3 * sin(iTime * 0.2);\n    float angle = atan(uv.y, uv.x) + iTime * 0.3;\n    float r = length(uv) * zoom;\n    angle = mod(angle, 6.28 / segments);\n    angle = abs(angle - 3.14 / segments);\n    vec2 p = vec2(cos(angle), sin(angle)) * r;\n    p += iTime * 0.1;\n    float v = sin(p.x * 10.0) * sin(p.y * 10.0);\n    v += sin(length(p) * 15.0 - iTime * 2.0);\n    v += sin(p.x * 5.0 + p.y * 7.0 + iTime);\n    vec3 col = 0.5 + 0.5 * cos(v * 2.0 + vec3(0.0, 2.0, 4.0) + iTime);\n    fragColor = vec4(col, 1.0);\n}"
 }
 ```
 
