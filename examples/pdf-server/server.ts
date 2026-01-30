@@ -33,6 +33,15 @@ export const DEFAULT_PDF = "https://arxiv.org/pdf/1706.03762"; // Attention Is A
 export const MAX_CHUNK_BYTES = 512 * 1024; // 512KB max per request
 export const RESOURCE_URI = "ui://pdf-viewer/mcp-app.html";
 
+/** Inactivity timeout: clear cache entry if not accessed for this long */
+export const CACHE_INACTIVITY_TIMEOUT_MS = 10_000; // 10 seconds
+
+/** Max lifetime: clear cache entry after this time regardless of access */
+export const CACHE_MAX_LIFETIME_MS = 60_000; // 60 seconds
+
+/** Max size for cached PDFs (defensive limit to prevent memory exhaustion) */
+export const CACHE_MAX_PDF_SIZE_BYTES = 50 * 1024 * 1024; // 50MB
+
 /** Allowed remote origins (security allowlist) */
 export const allowedRemoteOrigins = new Set([
   "https://agrirxiv.org",
@@ -126,67 +135,211 @@ export function validateUrl(url: string): { valid: boolean; error?: string } {
 }
 
 // =============================================================================
-// Range Request Helpers
+// Session-Local PDF Cache
 // =============================================================================
 
-export async function readPdfRange(
-  url: string,
-  offset: number,
-  byteCount: number,
-): Promise<{ data: Uint8Array; totalBytes: number }> {
-  const normalized = isArxivUrl(url) ? normalizeArxivUrl(url) : url;
-  const clampedByteCount = Math.min(byteCount, MAX_CHUNK_BYTES);
+/**
+ * Cache entry for remote PDFs from servers that don't support Range requests.
+ * Tracks both inactivity and max lifetime for automatic cleanup.
+ */
+interface CacheEntry {
+  /** The cached PDF data */
+  data: Uint8Array;
+  /** Timestamp when entry was created (for max lifetime) */
+  createdAt: number;
+  /** Timer that fires after CACHE_INACTIVITY_TIMEOUT_MS of no access */
+  inactivityTimer: ReturnType<typeof setTimeout>;
+  /** Timer that fires after CACHE_MAX_LIFETIME_MS from creation */
+  maxLifetimeTimer: ReturnType<typeof setTimeout>;
+}
 
-  if (isFileUrl(normalized)) {
-    const filePath = fileUrlToPath(normalized);
-    const stats = await fs.promises.stat(filePath);
-    const totalBytes = stats.size;
+/**
+ * Session-local PDF cache utilities.
+ * Each call to createPdfCache() creates an independent cache instance.
+ */
+export interface PdfCache {
+  /** Read a range of bytes from a PDF, using cache for servers without Range support */
+  readPdfRange(
+    url: string,
+    offset: number,
+    byteCount: number,
+  ): Promise<{ data: Uint8Array; totalBytes: number }>;
+  /** Get current number of cached entries */
+  getCacheSize(): number;
+  /** Clear all cached entries and their timers */
+  clearCache(): void;
+}
 
-    // Clamp to file bounds
+/**
+ * Creates a session-local PDF cache with automatic timeout-based cleanup.
+ *
+ * When a remote server returns HTTP 200 (full body) instead of 206 (partial),
+ * the full response is cached so subsequent chunk requests don't re-download.
+ *
+ * Entries are automatically cleared after:
+ * - CACHE_INACTIVITY_TIMEOUT_MS of no access (resets on each access)
+ * - CACHE_MAX_LIFETIME_MS from creation (absolute timeout)
+ */
+export function createPdfCache(): PdfCache {
+  const cache = new Map<string, CacheEntry>();
+
+  /** Delete a cache entry and clear its timers */
+  function deleteCacheEntry(url: string): void {
+    const entry = cache.get(url);
+    if (entry) {
+      clearTimeout(entry.inactivityTimer);
+      clearTimeout(entry.maxLifetimeTimer);
+      cache.delete(url);
+    }
+  }
+
+  /** Get cached data and refresh the inactivity timer */
+  function getCacheEntry(url: string): Uint8Array | undefined {
+    const entry = cache.get(url);
+    if (!entry) return undefined;
+
+    // Refresh inactivity timer on access
+    clearTimeout(entry.inactivityTimer);
+    entry.inactivityTimer = setTimeout(() => {
+      deleteCacheEntry(url);
+    }, CACHE_INACTIVITY_TIMEOUT_MS);
+
+    return entry.data;
+  }
+
+  /** Add data to cache with both inactivity and max lifetime timers */
+  function setCacheEntry(url: string, data: Uint8Array): void {
+    // Clear any existing entry first
+    deleteCacheEntry(url);
+
+    const entry: CacheEntry = {
+      data,
+      createdAt: Date.now(),
+      inactivityTimer: setTimeout(() => {
+        deleteCacheEntry(url);
+      }, CACHE_INACTIVITY_TIMEOUT_MS),
+      maxLifetimeTimer: setTimeout(() => {
+        deleteCacheEntry(url);
+      }, CACHE_MAX_LIFETIME_MS),
+    };
+
+    cache.set(url, entry);
+  }
+
+  /** Slice a cached or freshly-fetched full body to the requested range. */
+  function sliceToChunk(
+    fullData: Uint8Array,
+    offset: number,
+    clampedByteCount: number,
+  ): { data: Uint8Array; totalBytes: number } {
+    const totalBytes = fullData.length;
     const start = Math.min(offset, totalBytes);
     const end = Math.min(start + clampedByteCount, totalBytes);
-
-    if (start >= totalBytes) {
-      return { data: new Uint8Array(0), totalBytes };
-    }
-
-    // Read range from local file
-    const buffer = Buffer.alloc(end - start);
-    const fd = await fs.promises.open(filePath, "r");
-    try {
-      await fd.read(buffer, 0, end - start, start);
-    } finally {
-      await fd.close();
-    }
-
-    return { data: new Uint8Array(buffer), totalBytes };
+    return { data: fullData.slice(start, end), totalBytes };
   }
 
-  // Remote URL - Range request
-  const response = await fetch(normalized, {
-    headers: {
-      Range: `bytes=${offset}-${offset + clampedByteCount - 1}`,
+  async function readPdfRange(
+    url: string,
+    offset: number,
+    byteCount: number,
+  ): Promise<{ data: Uint8Array; totalBytes: number }> {
+    const normalized = isArxivUrl(url) ? normalizeArxivUrl(url) : url;
+    const clampedByteCount = Math.min(byteCount, MAX_CHUNK_BYTES);
+
+    if (isFileUrl(normalized)) {
+      const filePath = fileUrlToPath(normalized);
+      const stats = await fs.promises.stat(filePath);
+      const totalBytes = stats.size;
+
+      // Clamp to file bounds
+      const start = Math.min(offset, totalBytes);
+      const end = Math.min(start + clampedByteCount, totalBytes);
+
+      if (start >= totalBytes) {
+        return { data: new Uint8Array(0), totalBytes };
+      }
+
+      // Read range from local file
+      const buffer = Buffer.alloc(end - start);
+      const fd = await fs.promises.open(filePath, "r");
+      try {
+        await fd.read(buffer, 0, end - start, start);
+      } finally {
+        await fd.close();
+      }
+
+      return { data: new Uint8Array(buffer), totalBytes };
+    }
+
+    // Serve from cache if we previously downloaded the full body
+    const cached = getCacheEntry(normalized);
+    if (cached) {
+      return sliceToChunk(cached, offset, clampedByteCount);
+    }
+
+    // Remote URL - Range request
+    const response = await fetch(normalized, {
+      headers: {
+        Range: `bytes=${offset}-${offset + clampedByteCount - 1}`,
+      },
+    });
+
+    if (!response.ok && response.status !== 206) {
+      throw new Error(
+        `Range request failed: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    // HTTP 200 means the server ignored our Range header and sent the full body.
+    // Cache it so subsequent chunk requests don't re-download, then slice.
+    if (response.status === 200) {
+      // Check Content-Length header first as a preliminary size check
+      const contentLength = response.headers.get("content-length");
+      if (contentLength) {
+        const declaredSize = parseInt(contentLength, 10);
+        if (declaredSize > CACHE_MAX_PDF_SIZE_BYTES) {
+          throw new Error(
+            `PDF too large to cache: ${declaredSize} bytes exceeds ${CACHE_MAX_PDF_SIZE_BYTES} byte limit`,
+          );
+        }
+      }
+
+      const fullData = new Uint8Array(await response.arrayBuffer());
+
+      // Check actual size (may differ from Content-Length)
+      if (fullData.length > CACHE_MAX_PDF_SIZE_BYTES) {
+        throw new Error(
+          `PDF too large to cache: ${fullData.length} bytes exceeds ${CACHE_MAX_PDF_SIZE_BYTES} byte limit`,
+        );
+      }
+
+      setCacheEntry(normalized, fullData);
+      return sliceToChunk(fullData, offset, clampedByteCount);
+    }
+
+    // HTTP 206 Partial Content — parse total size from Content-Range header
+    const contentRange = response.headers.get("content-range");
+    let totalBytes = 0;
+    if (contentRange) {
+      const match = contentRange.match(/bytes \d+-\d+\/(\d+)/);
+      if (match) {
+        totalBytes = parseInt(match[1], 10);
+      }
+    }
+
+    const data = new Uint8Array(await response.arrayBuffer());
+    return { data, totalBytes };
+  }
+
+  return {
+    readPdfRange,
+    getCacheSize: () => cache.size,
+    clearCache: () => {
+      for (const url of [...cache.keys()]) {
+        deleteCacheEntry(url);
+      }
     },
-  });
-
-  if (!response.ok && response.status !== 206) {
-    throw new Error(
-      `Range request failed: ${response.status} ${response.statusText}`,
-    );
-  }
-
-  // Parse total size from Content-Range header
-  const contentRange = response.headers.get("content-range");
-  let totalBytes = 0;
-  if (contentRange) {
-    const match = contentRange.match(/bytes \d+-\d+\/(\d+)/);
-    if (match) {
-      totalBytes = parseInt(match[1], 10);
-    }
-  }
-
-  const data = new Uint8Array(await response.arrayBuffer());
-  return { data, totalBytes };
+  };
 }
 
 // =============================================================================
@@ -195,6 +348,9 @@ export async function readPdfRange(
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: "PDF Server", version: "2.0.0" });
+
+  // Create session-local cache (isolated per server instance)
+  const { readPdfRange } = createPdfCache();
 
   // Tool: list_pdfs - List available PDFs (local files + allowed origins)
   server.tool(
