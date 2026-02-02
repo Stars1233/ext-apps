@@ -21,7 +21,7 @@
     "start": "npm run start:http",
     "start:http": "cross-env NODE_ENV=development npm run build && npm run serve:http",
     "start:stdio": "cross-env NODE_ENV=development npm run build && npm run serve:stdio",
-    "dev": "cross-env NODE_ENV=development concurrently 'npm run watch' 'npm run serve:http'",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run watch\" \"npm run serve:http\"",
     "prepublishOnly": "npm run build",
     "serve": "bun --watch main.ts"
   },
