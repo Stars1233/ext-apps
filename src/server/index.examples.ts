@@ -164,7 +164,7 @@ function registerAppResource_basicUsage(server: McpServer) {
 }
 
 /**
- * Example: registerAppResource with CSP configuration for external domains.
+ * Example: registerAppResource with CSP configuration for network access.
  */
 function registerAppResource_withCsp(
   server: McpServer,

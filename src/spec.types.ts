@@ -539,8 +539,7 @@ export interface McpUiInitializedNotification {
 /**
  * @description Content Security Policy configuration for UI resources.
  *
- * Servers declare which external origins their UI needs to access.
- * Hosts use this to enforce appropriate CSP headers.
+ * Servers declare which origins their UI requires. Hosts use this to enforce appropriate CSP headers.
  *
  * > [!IMPORTANT]
  * > MCP App HTML runs in a sandboxed iframe with no same-origin server.
@@ -552,7 +551,7 @@ export interface McpUiResourceCsp {
    * @description Origins for network requests (fetch/XHR/WebSocket).
    *
    * - Maps to CSP `connect-src` directive
-   * - Empty or omitted → no external connections (secure default)
+   * - Empty or omitted → no network connections (secure default)
    *
    * @example
    * ```ts
@@ -565,7 +564,7 @@ export interface McpUiResourceCsp {
    *
    * - Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives
    * - Wildcard subdomains supported: `https://*.example.com`
-   * - Empty or omitted → no external resources (secure default)
+   * - Empty or omitted → no network resources (secure default)
    *
    * @example
    * ```ts

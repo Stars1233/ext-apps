@@ -188,8 +188,7 @@ export const McpUiSandboxProxyReadyNotificationSchema = z.object({
 /**
  * @description Content Security Policy configuration for UI resources.
  *
- * Servers declare which external origins their UI needs to access.
- * Hosts use this to enforce appropriate CSP headers.
+ * Servers declare which origins their UI requires. Hosts use this to enforce appropriate CSP headers.
  *
  * > [!IMPORTANT]
  * > MCP App HTML runs in a sandboxed iframe with no same-origin server.
@@ -201,7 +200,7 @@ export const McpUiResourceCspSchema = z.object({
    * @description Origins for network requests (fetch/XHR/WebSocket).
    *
    * - Maps to CSP `connect-src` directive
-   * - Empty or omitted → no external connections (secure default)
+   * - Empty or omitted → no network connections (secure default)
    *
    * @example
    * ```ts
@@ -212,14 +211,14 @@ export const McpUiResourceCspSchema = z.object({
     .array(z.string())
     .optional()
     .describe(
-      "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted \u2192 no external connections (secure default)",
+      "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted \u2192 no network connections (secure default)",
     ),
   /**
    * @description Origins for static resources (images, scripts, stylesheets, fonts, media).
    *
    * - Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives
    * - Wildcard subdomains supported: `https://*.example.com`
-   * - Empty or omitted → no external resources (secure default)
+   * - Empty or omitted → no network resources (secure default)
    *
    * @example
    * ```ts
@@ -230,7 +229,7 @@ export const McpUiResourceCspSchema = z.object({
     .array(z.string())
     .optional()
     .describe(
-      "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted \u2192 no external resources (secure default)",
+      "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted \u2192 no network resources (secure default)",
     ),
   /**
    * @description Origins for nested iframes.

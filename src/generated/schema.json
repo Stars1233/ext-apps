@@ -165,14 +165,14 @@
               "type": "object",
               "properties": {
                 "connectDomains": {
-                  "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no external connections (secure default)",
+                  "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no network connections (secure default)",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "resourceDomains": {
-                  "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no external resources (secure default)",
+                  "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no network resources (secure default)",
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -2511,14 +2511,14 @@
                   "type": "object",
                   "properties": {
                     "connectDomains": {
-                      "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no external connections (secure default)",
+                      "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no network connections (secure default)",
                       "type": "array",
                       "items": {
                         "type": "string"
                       }
                     },
                     "resourceDomains": {
-                      "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no external resources (secure default)",
+                      "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no network resources (secure default)",
                       "type": "array",
                       "items": {
                         "type": "string"
@@ -3874,14 +3874,14 @@
       "type": "object",
       "properties": {
         "connectDomains": {
-          "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no external connections (secure default)",
+          "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no network connections (secure default)",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "resourceDomains": {
-          "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no external resources (secure default)",
+          "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no network resources (secure default)",
           "type": "array",
           "items": {
             "type": "string"
@@ -3913,14 +3913,14 @@
           "type": "object",
           "properties": {
             "connectDomains": {
-              "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no external connections (secure default)",
+              "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no network connections (secure default)",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "resourceDomains": {
-              "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no external resources (secure default)",
+              "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no network resources (secure default)",
               "type": "array",
               "items": {
                 "type": "string"
@@ -4082,14 +4082,14 @@
               "type": "object",
               "properties": {
                 "connectDomains": {
-                  "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no external connections (secure default)",
+                  "description": "Origins for network requests (fetch/XHR/WebSocket).\n\n- Maps to CSP `connect-src` directive\n- Empty or omitted → no network connections (secure default)",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "resourceDomains": {
-                  "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no external resources (secure default)",
+                  "description": "Origins for static resources (images, scripts, stylesheets, fonts, media).\n\n- Maps to CSP `img-src`, `script-src`, `style-src`, `font-src`, `media-src` directives\n- Wildcard subdomains supported: `https://*.example.com`\n- Empty or omitted → no network resources (secure default)",
                   "type": "array",
                   "items": {
                     "type": "string"

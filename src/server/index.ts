@@ -270,7 +270,7 @@ export function registerAppTool<
  * );
  * ```
  *
- * @example With CSP configuration for external domains
+ * @example With CSP configuration for network access
  * ```ts source="./index.examples.ts#registerAppResource_withCsp"
  * registerAppResource(
  *   server,
