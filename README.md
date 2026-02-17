@@ -541,3 +541,7 @@ This configuration rebuilds each server on launch, ensuring your local changes a
 - [Specification (2026-01-26)](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) ([Draft](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/draft/apps.mdx)) — Protocol specification for host and server implementors
 - [SEP-1865 Discussion](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/1865) — Standards proposal and community discussion
 - [Contributing](CONTRIBUTING.md) — How to contribute to this project
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started, submit pull requests, and report issues.
