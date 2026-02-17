@@ -548,11 +548,10 @@ This configuration rebuilds each server on launch, ensuring your local changes a
 
 ## Resources
 
-- [Quickstart Guide](https://modelcontextprotocol.github.io/ext-apps/api/documents/Quickstart.html) — Step-by-step tutorial to build your first MCP App
-- [API Documentation](https://modelcontextprotocol.github.io/ext-apps/api/) — Full SDK reference for all classes, hooks, and types
-- [Specification (2026-01-26)](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) ([Draft](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/draft/apps.mdx)) — Protocol specification for host and server implementors
-- [SEP-1865 Discussion](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/1865) — Standards proposal and community discussion
-- [Contributing](CONTRIBUTING.md) — How to contribute to this project
+- [Quickstart Guide](https://modelcontextprotocol.github.io/ext-apps/api/documents/Quickstart.html)
+- [API Documentation](https://modelcontextprotocol.github.io/ext-apps/api/)
+- [Specification (2026-01-26)](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) ([Draft](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/draft/apps.mdx))
+- [SEP-1865 Discussion](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/1865)
 
 ## Contributing
 
