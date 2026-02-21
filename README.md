@@ -88,7 +88,8 @@ it will guide you through the rest.
   <a href="https://www.mcpjam.com/"><img src="https://img.shields.io/badge/MCPJam-client-8B5CF6" alt="MCPJam"></a>
 </p>
 
-> [!NOTE] MCP Apps is an extension to the
+> [!NOTE]
+> MCP Apps is an extension to the
 > [core MCP specification](https://modelcontextprotocol.io/specification). Host
 > support varies — see the
 > [clients page](https://modelcontextprotocol.io/clients) for the full list.
