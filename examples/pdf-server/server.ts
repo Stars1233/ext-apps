@@ -14,14 +14,16 @@ import { randomUUID } from "crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import {
   registerAppResource,
   registerAppTool,
   RESOURCE_MIME_TYPE,
 } from "@modelcontextprotocol/ext-apps/server";
-import type {
-  CallToolResult,
-  ReadResourceResult,
+import {
+  RootsListChangedNotificationSchema,
+  type CallToolResult,
+  type ReadResourceResult,
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
@@ -65,6 +67,9 @@ export const allowedRemoteOrigins = new Set([
 /** Allowed local file paths (populated from CLI args) */
 export const allowedLocalFiles = new Set<string>();
 
+/** Allowed local directories (populated from MCP roots) */
+export const allowedLocalDirs = new Set<string>();
+
 // Works both from source (server.ts) and compiled (dist/server.js)
 const DIST_DIR = import.meta.filename.endsWith(".ts")
   ? path.join(import.meta.dirname, "dist")
@@ -107,7 +112,17 @@ export function pathToFileUrl(filePath: string): string {
 export function validateUrl(url: string): { valid: boolean; error?: string } {
   if (isFileUrl(url)) {
     const filePath = fileUrlToPath(url);
-    if (!allowedLocalFiles.has(filePath)) {
+    const resolved = path.resolve(filePath);
+
+    // Check exact match (CLI args)
+    const exactMatch = allowedLocalFiles.has(filePath);
+
+    // Check directory match (MCP roots)
+    const dirMatch = [...allowedLocalDirs].some(
+      (dir) => resolved === dir || resolved.startsWith(dir + path.sep),
+    );
+
+    if (!exactMatch && !dirMatch) {
       return {
         valid: false,
         error: `Local file not in allowed list: ${filePath}`,
@@ -343,11 +358,57 @@ export function createPdfCache(): PdfCache {
 }
 
 // =============================================================================
+// MCP Roots
+// =============================================================================
+
+/**
+ * Query the client for roots and update allowedLocalDirs with any file:// roots
+ * that point to existing directories.
+ */
+async function refreshRoots(server: Server): Promise<void> {
+  if (!server.getClientCapabilities()?.roots) return;
+
+  try {
+    const { roots } = await server.listRoots();
+    allowedLocalDirs.clear();
+    for (const root of roots) {
+      if (root.uri.startsWith("file://")) {
+        const dir = fileUrlToPath(root.uri);
+        const resolved = path.resolve(dir);
+        try {
+          if (fs.statSync(resolved).isDirectory()) {
+            allowedLocalDirs.add(resolved);
+            console.error(`[pdf-server] Root directory allowed: ${resolved}`);
+          }
+        } catch {
+          // stat failed — skip non-existent roots
+        }
+      }
+    }
+  } catch (err) {
+    console.error(
+      `[pdf-server] Failed to list roots: ${err instanceof Error ? err.message : err}`,
+    );
+  }
+}
+
+// =============================================================================
 // MCP Server Factory
 // =============================================================================
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: "PDF Server", version: "2.0.0" });
+
+  // Fetch roots on initialization and subscribe to changes
+  server.server.oninitialized = () => {
+    refreshRoots(server.server);
+  };
+  server.server.setNotificationHandler(
+    RootsListChangedNotificationSchema,
+    async () => {
+      await refreshRoots(server.server);
+    },
+  );
 
   // Create session-local cache (isolated per server instance)
   const { readPdfRange } = createPdfCache();
@@ -365,16 +426,27 @@ export function createServer(): McpServer {
         pdfs.push({ url: pathToFileUrl(filePath), type: "local" });
       }
 
-      // Note: Remote URLs from allowed origins can be loaded dynamically
-      const text =
-        pdfs.length > 0
-          ? `Available PDFs:\n${pdfs.map((p) => `- ${p.url} (${p.type})`).join("\n")}\n\nRemote PDFs from ${[...allowedRemoteOrigins].join(", ")} can also be loaded dynamically.`
-          : `No local PDFs configured. Remote PDFs from ${[...allowedRemoteOrigins].join(", ")} can be loaded dynamically.`;
+      // Build text
+      const parts: string[] = [];
+      if (pdfs.length > 0) {
+        parts.push(
+          `Available PDFs:\n${pdfs.map((p) => `- ${p.url} (${p.type})`).join("\n")}`,
+        );
+      }
+      if (allowedLocalDirs.size > 0) {
+        parts.push(
+          `Allowed local directories (from client roots):\n${[...allowedLocalDirs].map((d) => `- ${d}`).join("\n")}\nAny PDF file under these directories can be displayed.`,
+        );
+      }
+      parts.push(
+        `Remote PDFs from ${[...allowedRemoteOrigins].join(", ")} can also be loaded dynamically.`,
+      );
 
       return {
-        content: [{ type: "text", text }],
+        content: [{ type: "text", text: parts.join("\n\n") }],
         structuredContent: {
           localFiles: pdfs.filter((p) => p.type === "local").map((p) => p.url),
+          allowedDirectories: [...allowedLocalDirs],
           allowedOrigins: [...allowedRemoteOrigins],
         },
       };
@@ -470,6 +542,7 @@ export function createServer(): McpServer {
 
 Accepts:
 - Local files explicitly added to the server (use list_pdfs to see available files)
+- Local files under directories provided by the client as MCP roots
 - Remote PDFs from: ${allowedDomains}`,
       inputSchema: {
         url: z.string().default(DEFAULT_PDF).describe("PDF URL"),

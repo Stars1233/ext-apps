@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, spyOn } from "bun:test";
+import path from "node:path";
 import {
   createPdfCache,
+  validateUrl,
+  allowedLocalFiles,
+  allowedLocalDirs,
+  pathToFileUrl,
   CACHE_INACTIVITY_TIMEOUT_MS,
   CACHE_MAX_LIFETIME_MS,
   CACHE_MAX_PDF_SIZE_BYTES,
@@ -177,4 +182,66 @@ describe("PDF Cache with Timeouts", () => {
   // using fake timers which can be complex with async code.
   // The timeout behavior is straightforward and can be verified
   // through manual testing or E2E tests.
+});
+
+describe("validateUrl with MCP roots (allowedLocalDirs)", () => {
+  const savedFiles = new Set(allowedLocalFiles);
+  const savedDirs = new Set(allowedLocalDirs);
+
+  beforeEach(() => {
+    allowedLocalFiles.clear();
+    allowedLocalDirs.clear();
+  });
+
+  afterEach(() => {
+    allowedLocalFiles.clear();
+    allowedLocalDirs.clear();
+    for (const f of savedFiles) allowedLocalFiles.add(f);
+    for (const d of savedDirs) allowedLocalDirs.add(d);
+  });
+
+  it("should allow a file under an allowed directory", () => {
+    // Use a real existing directory+file for the existsSync check
+    const dir = path.resolve(import.meta.dirname);
+    allowedLocalDirs.add(dir);
+
+    const filePath = path.join(dir, "server.ts");
+    const result = validateUrl(pathToFileUrl(filePath));
+    expect(result.valid).toBe(true);
+  });
+
+  it("should reject a file outside allowed directories", () => {
+    allowedLocalDirs.add("/some/allowed/dir");
+
+    const result = validateUrl("file:///other/dir/test.pdf");
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain("not in allowed list");
+  });
+
+  it("should prevent prefix-based directory traversal", () => {
+    // /tmp/safe should NOT allow /tmp/safevil/file.pdf
+    allowedLocalDirs.add("/tmp/safe");
+
+    const result = validateUrl("file:///tmp/safevil/file.pdf");
+    expect(result.valid).toBe(false);
+  });
+
+  it("should still allow exact file matches from allowedLocalFiles", () => {
+    const filePath = path.resolve(import.meta.dirname, "server.ts");
+    allowedLocalFiles.add(filePath);
+
+    const result = validateUrl(pathToFileUrl(filePath));
+    expect(result.valid).toBe(true);
+  });
+
+  it("should reject non-existent file even if under allowed dir", () => {
+    const dir = path.resolve(import.meta.dirname);
+    allowedLocalDirs.add(dir);
+
+    const result = validateUrl(
+      pathToFileUrl(path.join(dir, "nonexistent-file.pdf")),
+    );
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain("File not found");
+  });
 });
