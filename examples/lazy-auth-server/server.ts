@@ -273,10 +273,15 @@ async function signAuthCode(
   return new SignJWT({ ...payload, typ: "code" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
+    .setJti(crypto.randomUUID())
     .setIssuer(issuer)
     .setExpirationTime("5m")
     .sign(JWT_SECRET);
 }
+
+// Authorization codes are single-use (RFC 6749 §4.1.2): remember redeemed code
+// IDs until the code's own 5-minute expiry makes replay impossible anyway.
+const redeemedCodeJtis = new Map<string, number>(); // jti → unix GC time
 
 async function verifyAuthCode(
   code: string,
@@ -284,7 +289,12 @@ async function verifyAuthCode(
 ): Promise<CodePayload | undefined> {
   try {
     const { payload } = await jwtVerify(code, JWT_SECRET, { issuer });
-    if (payload.typ !== "code") return undefined;
+    if (payload.typ !== "code" || !payload.jti) return undefined;
+    const now = Math.floor(Date.now() / 1000);
+    for (const [k, gc] of redeemedCodeJtis)
+      if (gc < now) redeemedCodeJtis.delete(k);
+    if (redeemedCodeJtis.has(payload.jti)) return undefined; // already redeemed
+    redeemedCodeJtis.set(payload.jti, now + 5 * 60 + 10);
     return payload as unknown as CodePayload;
   } catch {
     return undefined;
@@ -363,6 +373,16 @@ async function handleAuthorize(req: Request, res: Response) {
     res.status(400).json({
       error: "invalid_request",
       error_description: "redirect_uri must use https (or http on localhost)",
+    });
+    return;
+  }
+  // PKCE is mandatory (the MCP auth spec requires it of clients, and this AS
+  // only advertises S256). Rejecting up front keeps stolen-code attacks out of
+  // the demo even though it has no real data to protect.
+  if (!code_challenge || code_challenge_method !== "S256") {
+    res.status(400).json({
+      error: "invalid_request",
+      error_description: "PKCE with S256 code_challenge is required",
     });
     return;
   }
@@ -475,25 +495,34 @@ async function handleToken(req: Request, res: Response) {
     });
     return;
   }
-  if (stored.code_challenge) {
-    if (!code_verifier) {
-      res.status(400).json({
-        error: "invalid_grant",
-        error_description: "Missing code_verifier",
-      });
-      return;
-    }
-    const hash = crypto
-      .createHash("sha256")
-      .update(code_verifier)
-      .digest("base64url");
-    if (hash !== stored.code_challenge) {
-      res.status(400).json({
-        error: "invalid_grant",
-        error_description: "PKCE verification failed",
-      });
-      return;
-    }
+  // PKCE verification (challenges are always present — /authorize requires them).
+  if (!code_verifier) {
+    res.status(400).json({
+      error: "invalid_grant",
+      error_description: "Missing code_verifier",
+    });
+    return;
+  }
+  const hash = crypto
+    .createHash("sha256")
+    .update(code_verifier)
+    .digest("base64url");
+  if (hash !== stored.code_challenge) {
+    res.status(400).json({
+      error: "invalid_grant",
+      error_description: "PKCE verification failed",
+    });
+    return;
+  }
+  // RFC 6749 §4.1.3 redirect_uri binding: if the client includes redirect_uri
+  // in the token request it must match the one from the authorization request.
+  // (OAuth 2.1 clients may omit it and rely on PKCE, which is enforced above.)
+  if (req.body.redirect_uri && req.body.redirect_uri !== stored.redirect_uri) {
+    res.status(400).json({
+      error: "invalid_grant",
+      error_description: "redirect_uri does not match authorization request",
+    });
+    return;
   }
   const scope = stored.scope ?? "read:secret";
   const sid = crypto.randomBytes(16).toString("hex"); // new session per authorization_code grant
@@ -789,6 +818,11 @@ export function createServer(authInfo?: AuthInfo, req?: Request): McpServer {
  */
 export function createApp(): Express {
   const app = express();
+  // Wildcard CORS is deliberate: browser-based MCP hosts connect to this demo
+  // from arbitrary origins and must read WWW-Authenticate to drive the lazy
+  // auth flow. There are no cookies or ambient credentials to protect — all
+  // auth is an explicit Bearer header, and /token is a credential-less PKCE
+  // exchange — so cross-origin reads expose nothing a direct request wouldn't.
   app.use(cors({ exposedHeaders: ["WWW-Authenticate"] }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
